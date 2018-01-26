@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Button } from 'reactstrap';
 
+'use strict';
 export default function run_demo(root) {
   ReactDOM.render(<Board />, root);
 }
@@ -16,18 +17,8 @@ class Board extends React.Component {
       let y=  tiles[x];
       tiles[x]=tiles[i];
       tiles[i]=y;
-  }
-  return tiles;
-}
-
-  restart(){
-    this.setState({
-      tiles: Array(16).fill(null),
-      tiles1: this.fillTiles(),
-      prev_value: -1,
-      count:0,
-      click:0,
-    });
+    }
+    return tiles;
   }
 
   constructor(props) {
@@ -39,6 +30,21 @@ class Board extends React.Component {
       count:0,
       click:0,
     };
+  }
+
+  restart(){
+    this.setState({
+      tiles: Array(16).fill(null),
+      tiles1: this.fillTiles(),
+      prev_value: -1,
+      count:0,
+      click:0,
+    });
+
+    for(let i=0;i<16;i++){
+      document.getElementById(""+i).style.background="LightSkyBlue";
+      document.getElementById(""+i).style.color="inherit";
+    }
   }
 
   handleClick(i) {
@@ -62,12 +68,12 @@ class Board extends React.Component {
           if(tiles1[i]==tiles1[prev_value]){
 
             setTimeout(() => {
-            this.setState({prev_value: -1,
-              count:0,});
-              document.getElementById(""+i).style.background="MediumBlue";
-            document.getElementById(""+prev_value).style.background="MediumBlue";
-            document.getElementById(""+i).style.color="MediumBlue";
-          document.getElementById(""+prev_value).style.color="MediumBlue";
+              this.setState({prev_value: -1,
+                count:0,});
+                document.getElementById(""+i).style.background="MediumBlue";
+                document.getElementById(""+prev_value).style.background="MediumBlue";
+                document.getElementById(""+i).style.color="MediumBlue";
+                document.getElementById(""+prev_value).style.color="MediumBlue";
               }, 1000);
               return;
             }
