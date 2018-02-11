@@ -23,8 +23,6 @@ class Board extends React.Component {
     this.channel.join()
     .receive("ok", this.gotView.bind(this))
     .receive("error", resp => { console.log("Unable to join", resp) });
-    console.log("#{tiles1}");
-
   }
 
   gotView(view) {
@@ -53,52 +51,46 @@ class Board extends React.Component {
     onClick={() => this.handleClick(i)}/>;
   }
 
+  addTiles(cnt){
+    var  lis=[];
+    for(var i= 0;i<4;i++){
+      let id2=cnt;
+      let clickable= this.state.tiles[cnt]==this.state.tiles1[cnt]? "click0" : "click1"
+      lis.push(<Tile value={this.state.tiles[cnt]}  key={id2} classname={this.state.found[cnt]} clickable={clickable}
+        onClick={() => this.handleClick(id2)}/>);
+        cnt++;
+      }
+      return lis;
+    }
 
-  render() {
+    render() {
+      var lis= [];
+      var cnt=0;
+      for(var i=0;i<4;i++){
+        lis.push(<div key={i} className="board-row">{this.addTiles(cnt)}</div>);
+        cnt+=4;
+      }
+      return (
+        <div>
+        <div className={"board_div"+this.state.count}>
+        {lis}
+        </div>
+        <br></br>
+        <div className="restart_div">
+        <button id="restart_button" onClick={()=>{this.restart()}}>RESTART</button>
+        <br></br>
+        <br></br>
+        <p>Clicks : {this.state.click}</p>
+        </div>
+        </div>
+      );
+    }
+  }
+
+  function Tile(props){
     return (
-      <div>
-      <div className={"board_div"+this.state.count}>
-      <div className="board-row">
-      {this.renderTile(0)}
-      {this.renderTile(1)}
-      {this.renderTile(2)}
-      {this.renderTile(3)}
-      </div>
-      <div className="board-row">
-      {this.renderTile(4)}
-      {this.renderTile(5)}
-      {this.renderTile(6)}
-      {this.renderTile(7)}
-      </div>
-      <div className="board-row">
-      {this.renderTile(8)}
-      {this.renderTile(9)}
-      {this.renderTile(10)}
-      {this.renderTile(11)}
-      </div>
-      <div className="board-row">
-      {this.renderTile(12)}
-      {this.renderTile(13)}
-      {this.renderTile(14)}
-      {this.renderTile(15)}
-      </div>
-      </div>
-      <br></br>
-      <div className="restart_div">
-      <button id="restart_button" onClick={()=>{this.restart()}}>RESTART</button>
-      <br></br>
-      <br></br>
-      <p>Clicks : {this.state.click}</p>
-      </div>
-      </div>
+      <button className={"btn btn-default button_found" + props.classname +" "+props.clickable} onClick={props.onClick}>
+      {props.value}
+      </button>
     );
   }
-}
-
-function Tile(props){
-  return (
-    <button id={props.id} className={"btn btn-default button_found" + props.classname +" "+props.clickable} onClick={props.onClick}>
-    {props.value}
-    </button>
-  );
-}
