@@ -42,8 +42,6 @@ class Board extends React.Component {
     this.channel.push("handleClick", { num: i })
     .receive("ok", this.gotView.bind(this));
 
-
-    console.log(this.state.count);
     this.channel.push("onClick", { num: i })
     .receive("ok", this.gotView.bind(this));
   }

@@ -38,8 +38,6 @@ defmodule Memory.Game do
     t= game.tiles
     cnt= game.count
     clk=game.click
-    found=game.found
-    prev=game.prev_value
     c=Enum.at(t1,i)
 
     t= List.replace_at(t,i,c)
@@ -47,11 +45,6 @@ defmodule Memory.Game do
   end
 
   def onClick(game,i) do
-    t1=game.tiles1
-    t= game.tiles
-    cnt= game.count
-    clk=game.click
-    found=game.found
     prev=game.prev_value
     if(prev == -1) do
       Map.merge(game, %{prev_value: i, count: 1})
@@ -59,13 +52,10 @@ defmodule Memory.Game do
       helper(game,i)
     end
   end
-
+  
 
   def helper(game,i) do
-    t1=game.tiles1
     t= game.tiles
-    cnt= game.count
-    clk=game.click
     prev=game.prev_value
     found= game.found
     if(Enum.at(t,i) == Enum.at(t,prev)) do
