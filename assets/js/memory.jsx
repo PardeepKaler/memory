@@ -44,13 +44,6 @@ class Board extends React.Component {
     .receive("ok", this.gotView.bind(this));
   }
 
-  renderTile(i) {
-    let id1=i+"";
-    let clickable= this.state.tiles[i]==this.state.tiles1[i]? "click0" : "click1"
-    return <Tile value={this.state.tiles[i]} id={id1} classname={this.state.found[i]} clickable={clickable}
-    onClick={() => this.handleClick(i)}/>;
-  }
-
   addTiles(cnt){
     var  lis=[];
     for(var i= 0;i<4;i++){
